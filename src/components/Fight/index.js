@@ -2,11 +2,16 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import Enemy from './Enemy'
+
+import { updateFightAction } from '../../store/Fight/actions'
+
 import './styles.css'
 
 class Fight extends React.Component {
   static propTypes = {
-    fight: PropTypes.string.isRequired
+    fight: PropTypes.object.isRequired,
+    updateFight: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -20,6 +25,13 @@ class Fight extends React.Component {
   render () {
     return (
       <div className="fight">
+        <div className="enemies">
+          <Enemy type="wolf" />
+          <Enemy type="wolf" />
+          <Enemy type="wolf" />
+          <Enemy type="wolf" />
+          <Enemy type="wolf" />
+        </div>
       </div>
     )
   }
@@ -30,7 +42,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  //
+  updateFight: updateFightAction
 }
 
 export default connect(

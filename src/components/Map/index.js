@@ -24,7 +24,6 @@ class Map extends React.Component {
 
   move = (pos) => {
     const { updateMap } = this.props
-    console.log(pos)
 
     updateMap({ pos })
   }
