@@ -10,31 +10,21 @@ import './styles.css'
 
 class Map extends React.Component {
   static propTypes = {
-    map: PropTypes.string.isRequired
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.state = {
-      curX: maps[props.map].config.startPosX,
-      curY: maps[props.map].config.startPosY
-    }
+    map: PropTypes.object.isRequired
   }
 
   render () {
-    console.log(this.state)
-    const { curX, curY } = this.state
-    const map = maps[this.props.map].map
+    const { map } = this.props
+    const currentMap = maps[`floor${map.floor}`].map
 
     return (
       <div className="map">
-        {map.map((row, i) =>
+        {currentMap.map((row, i) =>
           <Row key={i}>{row.map((cellType, j) => (
             <Cell
               key={j}
               type={cellType}
-              isCurrentPos={i === curY && j === curX}
+              isCurrentPos={i === map.pos.y && j === map.pos.x}
             />))
           }</Row>)}
       </div>

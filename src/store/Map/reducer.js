@@ -1,6 +1,14 @@
 // import { MAP } from './actions'
 
-export default (state = 'floor1', { type }) => {
+const initialState = {
+  floor: '1',
+  pos: {
+    x: 5,
+    y: 10
+  }
+}
+
+export default (state = initialState, { type }) => {
   switch (type) {
     default: {
       return state
