@@ -1,4 +1,4 @@
-// import { MAP } from './actions'
+import { MAP } from './actions'
 
 const initialState = {
   floor: '1',
@@ -8,8 +8,14 @@ const initialState = {
   }
 }
 
-export default (state = initialState, { type }) => {
+export default (state = initialState, { type, payload }) => {
   switch (type) {
+    case MAP.UPDATE: {
+      return {
+        ...state,
+        ...payload
+      }
+    }
     default: {
       return state
     }

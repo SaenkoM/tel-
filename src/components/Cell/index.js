@@ -9,15 +9,23 @@ import './styles.css'
 class Cell extends React.Component {
   static propTypes = {
     type: PropTypes.number.isRequired,
-    isCurrentPos: PropTypes.bool.isRequired
+    pos: PropTypes.object.isRequired,
+    isCurrentPos: PropTypes.bool.isRequired,
+    canMove: PropTypes.bool.isRequired,
+    onMove: PropTypes.func.isRequired
   }
 
   render () {
-    const { type, isCurrentPos } = this.props
+    const { type, pos, isCurrentPos, canMove, onMove } = this.props
 
     return (
       <div className={`cell ${TYPES[type]}`}>
-        {isCurrentPos ? 'H' : ''}
+        <div
+          className={`cell-wrapper${canMove ? ' can-move' : ''}`}
+          onClick={canMove ? () => onMove(pos) : () => {}}
+        >
+          {isCurrentPos ? 'H' : ''}
+        </div>
       </div>
     )
   }
