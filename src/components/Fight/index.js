@@ -3,8 +3,9 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import Enemy from './Enemy'
+import Card from './Card'
 
-import { updateFightAction } from '../../store/Fight/actions'
+import { startFightAction, updateFightAction } from '../../store/Fight/actions'
 
 import './styles.css'
 
@@ -17,20 +18,61 @@ class Fight extends React.Component {
   constructor (props) {
     super(props)
 
+    props.startFight({
+      enemies: [
+        {
+          type: 'wolf',
+          stats: {
+            health: {
+              cur: 9,
+              max: 14
+            }
+          }
+        },
+        {
+          type: 'wolf',
+          stats: {
+            health: {
+              cur: 9,
+              max: 14
+            }
+          }
+        },
+        {
+          type: 'wolf',
+          stats: {
+            health: {
+              cur: 9,
+              max: 14
+            }
+          }
+        }
+      ]
+    })
+
     this.state = {
       //
     }
   }
 
   render () {
+    const { fight } = this.props
+
+    if (!fight) return null
+
     return (
       <div className="fight">
         <div className="enemies">
-          <Enemy type="wolf" />
-          <Enemy type="wolf" />
-          <Enemy type="wolf" />
-          <Enemy type="wolf" />
-          <Enemy type="wolf" />
+          {fight.enemies.map((enemy, i) => <Enemy key={i} type={enemy.type} />)}
+        </div>
+        <div className="cards">
+          <Card type="attack" />
+          <Card type="attack" />
+          <Card type="attack" />
+          <Card type="attack" />
+          <Card type="attack" />
+          <Card type="attack" />
+          <Card type="attack" />
         </div>
       </div>
     )
@@ -42,6 +84,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
+  startFight: startFightAction,
   updateFight: updateFightAction
 }
 

@@ -1,6 +1,8 @@
+import './styles.css'
+
 const Wolf = {
   name: 'Wolf',
-  image: '/assets/Wolf.png',
+  image: 'wolf.png',
   stats: {
     //
   },

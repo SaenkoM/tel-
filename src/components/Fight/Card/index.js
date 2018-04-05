@@ -2,12 +2,11 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Fiends from '../../Fiends'
-import Progress from '../../Progress'
+import Cards from '../../Cards'
 
 import './styles.css'
 
-class Enemy extends React.Component {
+class Card extends React.Component {
   static propTypes = {
     type: PropTypes.string.isRequired
   }
@@ -15,7 +14,7 @@ class Enemy extends React.Component {
   constructor (props) {
     super(props)
 
-    this.fiend = Fiends[props.type]
+    this.card = Cards[props.type]
 
     this.state = {
       //
@@ -26,16 +25,19 @@ class Enemy extends React.Component {
     const { type } = this.props
 
     return (
-      <div className={`fiend ${type}`}>
+      <div className={`card ${type}`}>
         <div className="icon">
-          <img src={`/assets/fiends/${this.fiend.image}`} alt="" />
+          <img src={`/assets/cards/${this.card.image}`} alt="" />
         </div>
-        <div className="stats">
-          <div className="name">
-            {this.fiend.name}
+        <div className="effect">
+          {this.card.text.map((text, i) => <p key={i}>{text}</p>)}
+        </div>
+        <div className="cost">
+          <div className="ap">
+            {this.card.cost.ap}
           </div>
-          <div className="health">
-            <Progress cur={9} max={14} />
+          <div className="mp">
+            {this.card.cost.mp}
           </div>
         </div>
       </div>
@@ -54,4 +56,4 @@ const mapDispatchToProps = {
 export default connect(
   mapStateToProps,
   mapDispatchToProps
-)(Enemy)
+)(Card)

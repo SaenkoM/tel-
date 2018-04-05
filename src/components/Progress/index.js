@@ -7,8 +7,8 @@ const Progress = (props) => {
 
   return (
     <div className="progress">
+      <div className="progress-text">{`${cur}/${max}`}</div>
       <div className="progress-inner" style={{ width: `${cur / max * 100}%` }}>
-        {`${cur}/${max}`}
       </div>
     </div>
   )

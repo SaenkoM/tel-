@@ -1,4 +1,4 @@
-.enemy {
+.fiend {
   display: inline-block;
   width: 180px;
   height: 240px;
@@ -29,9 +29,9 @@
     margin-top: 5px;
     text-align: center;
     font-size: 18px;
-  }
 
-  &.wolf {
-    background-color: #063a08;
+    .health {
+      padding: 5px 0;
+    }
   }
 }

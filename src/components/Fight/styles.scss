@@ -14,5 +14,15 @@
   .enemies {
     display: flex;
     justify-content: space-evenly;
+    width: 100%;
+    height: 270px;
+  }
+
+  .cards {
+    width: 100%;
+    height: 150px;
+    margin-top: 225px;
+    display: flex;
+    justify-content: space-evenly;
   }
 }
