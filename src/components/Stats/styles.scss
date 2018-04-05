@@ -1,0 +1,27 @@
+.character-stats {
+  position: absolute;
+  width: 350px;
+  height: 60px;
+  left: 50%;
+  bottom: 40px;
+  transform: translate(-50%, 0);
+  user-select: none;
+
+  div {
+    .progress {
+      font-size: 19px;
+    }
+  }
+
+  .hp {
+    margin-bottom: -2px;
+  }
+
+  .mp {
+    .progress {
+      .progress-inner {
+        background-color: #34346b;
+      }
+    }
+  }
+}

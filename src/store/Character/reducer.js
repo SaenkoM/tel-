@@ -1,4 +1,4 @@
-// import { PLAYER } from './actions'
+// import { CHARACTER } from './actions'
 
 const initial = {
   level: 1,
@@ -8,8 +8,12 @@ const initial = {
     max: 5
   },
   hp: {
-    cur: null,
+    cur: 50,
     max: 50
+  },
+  mp: {
+    cur: 24,
+    max: 24
   }
 }
 

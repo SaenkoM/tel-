@@ -2,7 +2,7 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
-import Enemy from './Enemy'
+import Fiend from './Fiend'
 import Card from './Card'
 
 import { startFightAction, updateFightAction } from '../../store/Fight/actions'
@@ -12,6 +12,7 @@ import './styles.css'
 class Fight extends React.Component {
   static propTypes = {
     fight: PropTypes.object.isRequired,
+    startFight: PropTypes.func.isRequired,
     updateFight: PropTypes.func.isRequired
   }
 
@@ -19,7 +20,7 @@ class Fight extends React.Component {
     super(props)
 
     props.startFight({
-      enemies: [
+      fiends: [
         {
           type: 'wolf',
           stats: {
@@ -47,6 +48,23 @@ class Fight extends React.Component {
             }
           }
         }
+      ],
+      cards: [
+        {
+          type: 'attack'
+        },
+        {
+          type: 'attack'
+        },
+        {
+          type: 'attack'
+        },
+        {
+          type: 'attack'
+        },
+        {
+          type: 'attack'
+        }
       ]
     })
 
@@ -63,16 +81,10 @@ class Fight extends React.Component {
     return (
       <div className="fight">
         <div className="enemies">
-          {fight.enemies.map((enemy, i) => <Enemy key={i} type={enemy.type} />)}
+          {fight.fiends.map((fiend, i) => <Fiend key={i} type={fiend.type} />)}
         </div>
         <div className="cards">
-          <Card type="attack" />
-          <Card type="attack" />
-          <Card type="attack" />
-          <Card type="attack" />
-          <Card type="attack" />
-          <Card type="attack" />
-          <Card type="attack" />
+          {fight.cards.map((card, i) => <Card key={i} type={card.type} />)}
         </div>
       </div>
     )

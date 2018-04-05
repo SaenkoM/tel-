@@ -4,6 +4,11 @@
   border: 2px solid black;
   padding: 6px;
   user-select: none;
+  transition: all 0.2s linear;
+
+  &:hover {
+    border-color: #7f8026;
+  }
 
   .icon {
     height: 70px;
