@@ -23,7 +23,7 @@ class Fight extends React.Component {
           {fight.fiends.map((fiend, i) => <Fiend key={i} fiend={fiend} />)}
         </div>
         <div className="info">
-          <div className="ap">{`AP: ${42}`}</div>
+          <div className="ap">{`AP: ${fight.ap}`}</div>
           <div className="end-turn">End turn</div>
         </div>
         <div className="cards">
