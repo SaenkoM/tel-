@@ -1,6 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
 
 import Fiends from '../../Fiends'
 import Progress from '../../Progress'
@@ -43,8 +44,14 @@ class Enemy extends React.Component {
   render () {
     const { fiend } = this.props
 
+    console.log('fiend render', fiend)
+
+    const fiendClasses = classNames('fiend', fiend.type, {
+      isAttacking: fiend.isAttacking
+    })
+
     return (
-      <div className={`fiend ${fiend.type}`} onDragOver={this.onDragOverHandler} onDrop={this.onDropHandler}>
+      <div className={fiendClasses} onDragOver={this.onDragOverHandler} onDrop={this.onDropHandler}>
         <div className="icon">
           <img src={`/assets/fiends/${this.fiend.image}`} alt="" />
         </div>

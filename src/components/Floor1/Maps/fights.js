@@ -19,9 +19,9 @@ const FIGHTS = [
   [null, null, null, null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null, null, null, null],
   [null, null, null, null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, null, null, null, null, null, null],
-  [null, null, null, null, null, F001, null, null, null, null, null],
-  [null, null, null, null, null, F001, null, null, null, null, null],
+  [null, null, null, null, F001, F001, F001, null, null, null, null],
+  [null, null, null, null, F001, F001, F001, null, null, null, null],
+  [null, null, null, null, F001, F001, F001, null, null, null, null],
   [null, null, null, null, null, F001, null, null, null, null, null],
   [null, null, null, null, null, F001, null, null, null, null, null]
 ]

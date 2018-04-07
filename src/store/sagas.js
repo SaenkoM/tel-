@@ -1,6 +1,7 @@
+import { delay } from 'redux-saga'
 import { put, takeEvery, select } from 'redux-saga/effects'
 
-import { FIGHT, updateFightAction, startTurnAction } from './Fight/actions'
+import { FIGHT, updateFightAction, endFightAction, startTurnAction } from './Fight/actions'
 import { updateCharacterAction } from './Character/actions'
 
 import Cards from '../components/Cards'
@@ -21,9 +22,15 @@ function * draw () {
     cards.push(Cards[card.type].create(card.level))
   }
 
-  console.log(cards)
-
   return cards
+}
+
+function * checkFightEnd () {
+  const fight = yield select(getFight)
+
+  if (!fight.fiends.find((fiend) => fiend.hp.cur)) {
+    yield put(endFightAction())
+  }
 }
 
 function * fightStart ({ encounter }) {
@@ -35,24 +42,58 @@ function * fightStart ({ encounter }) {
 }
 
 function * turnStart ({ turn }) {
+  const fight = yield select(getFight)
   const character = yield select(getCharacter)
 
-  const apGain = randomInRange(character.ap.min, character.ap.max)
+  const nextAp = (fight.ap || 0) + randomInRange(character.ap.min, character.ap.max)
 
   const cards = (yield draw()).map((card) => ({
     ...card,
-    canPlay: card.cost.ap <= apGain && card.cost.mp <= character.mp.cur,
+    canPlay: card.cost.ap <= nextAp && card.cost.mp <= character.mp.cur,
     isPlayed: false
   }))
 
   yield put(updateFightAction({
-    ap: apGain,
+    ap: nextAp,
     cards
   }))
 }
 
 function * turnEnd ({ turn }) {
+  const fight = yield select(getFight)
   const character = yield select(getCharacter)
+
+  for (let i = 0; i < fight.fiends.length; i++) {
+    if (!fight.fiends[i].hp.cur) continue
+
+    fight.fiends[i] = {
+      ...fight.fiends[i],
+      isAttacking: true
+    }
+
+    yield put(updateFightAction({
+      fiends: fight.fiends
+    }))
+
+    yield delay(200)
+
+    Fiends[fight.fiends[i].type].attack(character)
+
+    yield put(updateCharacterAction({
+      ...character
+    }))
+
+    fight.fiends[i] = {
+      ...fight.fiends[i],
+      isAttacking: false
+    }
+
+    yield put(updateFightAction({
+      fiends: fight.fiends
+    }))
+  }
+
+  yield delay(400)
 
   yield put(startTurnAction())
 }
@@ -96,6 +137,8 @@ function * cardPlayed ({ data }) {
     fiends: fight.fiends,
     cards: fight.cards
   }))
+
+  yield checkFightEnd()
 }
 
 function * rootSaga () {

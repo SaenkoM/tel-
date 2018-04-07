@@ -11,6 +11,10 @@
     border-color: #7f8026;
   }
 
+  &.isAttacking {
+    margin-top: 30px;
+  }
+
   .icon {
     height: 160px;
     border: 1px solid black;
