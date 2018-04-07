@@ -2,6 +2,8 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
+import { cardPlayedAction } from '../../store/Fight/actions'
+
 import Progress from '../Progress'
 
 import './styles.css'
@@ -9,14 +11,26 @@ import './styles.css'
 class Stats extends React.Component {
   static propTypes = {
     hp: PropTypes.object.isRequired,
-    mp: PropTypes.object.isRequired
+    mp: PropTypes.object.isRequired,
+    playCard: PropTypes.func.isRequired
+  }
+
+  onDragOverHandler = (e) => {
+    e.preventDefault()
+  }
+
+  onDropHandler = (e) => {
+    const { playCard } = this.props
+
+    const card = e.dataTransfer.getData('card')
+    playCard({ card, target: 'self' })
   }
 
   render () {
     const { hp, mp } = this.props
 
     return (
-      <div className="character-stats">
+      <div className="character-stats" onDragOver={this.onDragOverHandler} onDrop={this.onDropHandler}>
         <div className="hp">
           <Progress cur={hp.cur} max={hp.max} />
         </div>
@@ -34,7 +48,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  //
+  playCard: cardPlayedAction
 }
 
 export default connect(

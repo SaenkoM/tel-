@@ -9,7 +9,8 @@ import './styles.css'
 
 class Fight extends React.Component {
   static propTypes = {
-    fight: PropTypes.object
+    fight: PropTypes.object,
+    character: PropTypes.object
   }
 
   render () {
@@ -20,14 +21,14 @@ class Fight extends React.Component {
     return (
       <div className="fight">
         <div className="enemies">
-          {fight.fiends.map((fiend, i) => <Fiend key={i} fiend={fiend} />)}
+          {fight.fiends.map((fiend, i) => <Fiend key={i} fiend={fiend} id={i} />)}
         </div>
         <div className="info">
           <div className="ap">{`AP: ${fight.ap}`}</div>
           <div className="end-turn">End turn</div>
         </div>
         <div className="cards">
-          {fight.cards.map((card, i) => <Card key={i} type={card.type} />)}
+          {fight.cards.map((card, i) => <Card key={i} card={card} id={i} />)}
         </div>
       </div>
     )
@@ -35,7 +36,8 @@ class Fight extends React.Component {
 }
 
 const mapStateToProps = (state) => ({
-  fight: state.fight
+  fight: state.fight,
+  character: state.character
 })
 
 const mapDispatchToProps = {

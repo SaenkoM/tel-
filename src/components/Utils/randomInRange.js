@@ -1,6 +1,6 @@
 const randomInRange = (min, max) => {
   const rand = Math.random() * 100
-  const diff = max - min
+  const diff = max - min + 1
 
   let base = 0
   const step = 100 / diff

@@ -8,24 +8,30 @@ import './styles.css'
 
 class Card extends React.Component {
   static propTypes = {
-    type: PropTypes.string.isRequired
+    card: PropTypes.object.isRequired
   }
 
   constructor (props) {
     super(props)
 
-    this.card = Cards[props.type]
+    this.card = Cards[props.card.type]
 
     this.state = {
       //
     }
   }
 
+  onDragStartHandler = (e) => {
+    const { id } = this.props
+
+    e.dataTransfer.setData('card', id)
+  }
+
   render () {
-    const { type } = this.props
+    const { card } = this.props
 
     return (
-      <div className={`card ${type}`}>
+      <div className={`card ${card.type}`} draggable onDragStart={this.onDragStartHandler}>
         <div className="icon">
           <img src={`/assets/cards/${this.card.image}`} alt="" />
         </div>

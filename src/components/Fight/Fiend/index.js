@@ -5,11 +5,14 @@ import { connect } from 'react-redux'
 import Fiends from '../../Fiends'
 import Progress from '../../Progress'
 
+import { cardPlayedAction } from '../../../store/Fight/actions'
+
 import './styles.css'
 
 class Enemy extends React.Component {
   static propTypes = {
-    fiend: PropTypes.object.isRequired
+    fiend: PropTypes.object.isRequired,
+    playCard: PropTypes.func.isRequired
   }
 
   constructor (props) {
@@ -22,11 +25,26 @@ class Enemy extends React.Component {
     }
   }
 
+  componentWillReceiveProps (a, b) {
+    console.log(a, b)
+  }
+
+  onDragOverHandler = (e) => {
+    e.preventDefault()
+  }
+
+  onDropHandler = (e) => {
+    const { playCard, id } = this.props
+
+    const card = e.dataTransfer.getData('card')
+    playCard({ card, target: id })
+  }
+
   render () {
     const { fiend } = this.props
 
     return (
-      <div className={`fiend ${fiend.type}`}>
+      <div className={`fiend ${fiend.type}`} onDragOver={this.onDragOverHandler} onDrop={this.onDropHandler}>
         <div className="icon">
           <img src={`/assets/fiends/${this.fiend.image}`} alt="" />
         </div>
@@ -48,7 +66,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  //
+  playCard: cardPlayedAction
 }
 
 export default connect(
