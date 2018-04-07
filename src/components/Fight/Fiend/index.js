@@ -9,13 +9,13 @@ import './styles.css'
 
 class Enemy extends React.Component {
   static propTypes = {
-    type: PropTypes.string.isRequired
+    fiend: PropTypes.object.isRequired
   }
 
   constructor (props) {
     super(props)
 
-    this.fiend = Fiends[props.type]
+    this.fiend = Fiends[props.fiend.type]
 
     this.state = {
       //
@@ -23,10 +23,10 @@ class Enemy extends React.Component {
   }
 
   render () {
-    const { type } = this.props
+    const { fiend } = this.props
 
     return (
-      <div className={`fiend ${type}`}>
+      <div className={`fiend ${fiend.type}`}>
         <div className="icon">
           <img src={`/assets/fiends/${this.fiend.image}`} alt="" />
         </div>
@@ -35,7 +35,7 @@ class Enemy extends React.Component {
             {this.fiend.name}
           </div>
           <div className="health">
-            <Progress cur={9} max={14} />
+            <Progress cur={fiend.hp.cur} max={fiend.hp.max} />
           </div>
         </div>
       </div>

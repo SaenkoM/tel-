@@ -8,6 +8,15 @@ const Wolf = {
   },
   attacks: {
     //
+  },
+  create: (level) => {
+    return {
+      type: 'wolf',
+      hp: {
+        cur: 11 + level * 3,
+        max: 11 + level * 3
+      }
+    }
   }
 }
 

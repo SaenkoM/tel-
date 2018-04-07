@@ -3,10 +3,13 @@ import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import maps from './maps'
+import testRandom from '../Utils/testRandom'
+
 import Row from '../Row'
 import Cell from '../Cell'
 
 import { updateMapAction } from '../../store/Map/actions'
+import { startFightAction } from '../../store/Fight/actions'
 
 import './styles.css'
 
@@ -23,9 +26,17 @@ class Map extends React.Component {
   }
 
   move = (pos) => {
-    const { updateMap } = this.props
+    const { updateMap, startFight } = this.props
 
     updateMap({ pos })
+
+    const posFight = this.currentMap.fights[pos.y][pos.x]
+
+    if (posFight && testRandom(posFight.encounterChance)) {
+      const encountersChances = posFight.encounters.map((encounter) => encounter.chance)
+      const encounter = posFight.encounters[testRandom(encountersChances)]
+      startFight(encounter)
+    }
   }
 
   render () {
@@ -57,7 +68,8 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  updateMap: updateMapAction
+  updateMap: updateMapAction,
+  startFight: startFightAction
 }
 
 export default connect(

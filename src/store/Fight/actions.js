@@ -4,9 +4,9 @@ export const FIGHT = {
   END: 'FIGHT_END'
 }
 
-export const startFightAction = (data) => ({
+export const startFightAction = (encounter) => ({
   type: FIGHT.START,
-  payload: data
+  encounter
 })
 
 export const updateFightAction = (data) => ({

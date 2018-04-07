@@ -1,73 +1,44 @@
-import { put, takeEvery } from 'redux-saga/effects'
-import API from './API'
+import { put, takeEvery, select } from 'redux-saga/effects'
 
-import { DATA, addDataAction } from './Data/actions'
+import { FIGHT, updateFightAction } from './Fight/actions'
 
-const filterData = (data) => {
-  const { message, success, ...filteredData } = data
-  return filteredData
-}
+import Fiends from '../components/Fiends'
 
-const separateData = (payload) => {
-  const formData = {}
-  const files = []
+const getCharacter = (state) => state.character
 
-  Object.keys(payload).forEach((key) => {
-    if (payload[key] && typeof payload[key] === 'object' && payload[key][0]) {
-      files.push({
-        data: payload[key][0],
-        type: key
-      })
-    } else {
-      formData[key] = payload[key]
-    }
-  })
+function * fightStart ({ encounter }) {
+  console.log('1', encounter)
 
-  return { formData, files }
-}
+  const fiends = encounter.fiends.map((fiend) => Fiends[fiend.type].create(fiend.level))
 
-const uploadFiles = (files) => {
-  Promise.all(files.map((file) => {
-    return new Promise((resolve) => {
-      const fileReader = new FileReader()
+  const character = yield select(getCharacter)
 
-      fileReader.onload = () => {
-        resolve({ file: fileReader.result, type: file.type })
+  console.log('char', character)
+
+  yield put(updateFightAction({
+    fiends,
+    cards: [
+      {
+        type: 'attack'
+      },
+      {
+        type: 'attack'
+      },
+      {
+        type: 'attack'
+      },
+      {
+        type: 'attack'
+      },
+      {
+        type: 'attack'
       }
-
-      fileReader.readAsDataURL(file.data)
-    }).then((file) => API.saveFile(file))
+    ]
   }))
 }
 
-function * fetchData (action) {
-  try {
-    const data = yield API.fetchData(action.payload)
-    yield put(addDataAction(filterData(data)))
-  } catch (e) {
-    yield put({ type: DATA.FETCH_FAILED, payload: e.message })
-  }
-}
-
-function * saveData ({ payload }) {
-  const { formData, files } = separateData(payload)
-
-  try {
-    yield uploadFiles(files)
-
-    yield put(addDataAction(formData))
-
-    const data = yield API.saveData(formData)
-
-    yield put({ type: DATA.SAVE_SUCCEEDED, payload: data })
-  } catch (e) {
-    yield put({ type: DATA.SAVE_FAILED, payload: e.message })
-  }
-}
-
 function * rootSaga () {
-  yield takeEvery(DATA.FETCH, fetchData)
-  yield takeEvery(DATA.SAVE, saveData)
+  yield takeEvery(FIGHT.START, fightStart)
 }
 
 export default rootSaga
