@@ -10,6 +10,16 @@
     border-color: #7f8026;
   }
 
+  &.cant-play {
+    opacity: 0.45;
+    pointer-events: none;
+  }
+
+  &.isPlayed {
+    margin-top: -50px;
+    opacity: 0.2;
+  }
+
   .icon {
     height: 70px;
     border: 1px solid black;

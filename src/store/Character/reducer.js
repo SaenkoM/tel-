@@ -1,4 +1,4 @@
-// import { CHARACTER } from './actions'
+import { CHARACTER } from './actions'
 
 const initial = {
   level: 1,
@@ -17,8 +17,14 @@ const initial = {
   }
 }
 
-export default (state = initial, { type }) => {
+export default (state = initial, { type, payload }) => {
   switch (type) {
+    case CHARACTER.UPDATE: {
+      return {
+        ...state,
+        ...payload
+      }
+    }
     default: {
       return state
     }

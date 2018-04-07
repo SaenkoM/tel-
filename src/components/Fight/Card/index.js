@@ -1,24 +1,13 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
-
-import Cards from '../../Cards'
+import classNames from 'classnames'
 
 import './styles.css'
 
 class Card extends React.Component {
   static propTypes = {
     card: PropTypes.object.isRequired
-  }
-
-  constructor (props) {
-    super(props)
-
-    this.card = Cards[props.card.type]
-
-    this.state = {
-      //
-    }
   }
 
   onDragStartHandler = (e) => {
@@ -30,20 +19,25 @@ class Card extends React.Component {
   render () {
     const { card } = this.props
 
+    const cardClasses = classNames('card', card.type, {
+      'cant-play': !card.canPlay,
+      isPlayed: card.isPlayed
+    })
+
     return (
-      <div className={`card ${card.type}`} draggable onDragStart={this.onDragStartHandler}>
+      <div className={cardClasses} draggable onDragStart={this.onDragStartHandler}>
         <div className="icon">
-          <img src={`/assets/cards/${this.card.image}`} alt="" />
+          <img src={`/assets/cards/${card.image}`} alt="" />
         </div>
         <div className="effect">
-          {this.card.text.map((text, i) => <p key={i}>{text}</p>)}
+          {card.text.map((text, i) => <p key={i}>{text}</p>)}
         </div>
         <div className="cost">
           <div className="ap">
-            {this.card.cost.ap}
+            {card.cost.ap}
           </div>
           <div className="mp">
-            {this.card.cost.mp}
+            {card.cost.mp}
           </div>
         </div>
       </div>

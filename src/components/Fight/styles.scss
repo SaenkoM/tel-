@@ -34,6 +34,7 @@
       margin-left: 25px;
       top: 50%;
       transform: translate(0, -50%);
+      user-select: none;
     }
 
     .end-turn {
@@ -41,6 +42,7 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
+      user-select: none;
 
       height: 36px;
       line-height: 32px;

@@ -3,22 +3,27 @@ import './styles.css'
 import randomInRange from '../../Utils/randomInRange'
 
 const Attack = {
-  image: 'heal.png',
-  text: [
-    'Heal',
-    '7-10'
-  ],
-  cost: {
-    ap: 15,
-    mp: 3
-  },
-  create: () => {
-    //
+  create: (level) => {
+    return {
+      type: 'heal',
+      image: 'heal.png',
+      text: [
+        'Heal',
+        `${5 + level * 2}-${8 + level * 2}`
+      ],
+      cost: {
+        ap: 15,
+        mp: 3
+      }
+    }
   },
   execute: (target) => {
     console.log(target)
     const heal = randomInRange(7, 10)
-    target.hp.cur = target.hp.cur + heal < target.hp.max ? target.hp.cur + heal : target.hp.max
+    target.hp = {
+      ...target.hp,
+      cur: target.hp.cur + heal < target.hp.max ? target.hp.cur + heal : target.hp.max
+    }
   }
 }
 

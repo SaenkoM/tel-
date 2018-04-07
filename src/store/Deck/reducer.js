@@ -1,12 +1,11 @@
 // import { DECK } from './actions'
 
 const initialState = [
-  { type: 'attack' },
-  { type: 'attack' },
-  { type: 'attack' },
-  { type: 'attack' },
-  { type: 'attack' },
-  { type: 'heal' }
+  { type: 'attack', level: 1 },
+  { type: 'attack', level: 1 },
+  { type: 'attack', level: 1 },
+  { type: 'attack', level: 1 },
+  { type: 'heal', level: 1 }
 ]
 
 export default (state = initialState, { type, payload }) => {

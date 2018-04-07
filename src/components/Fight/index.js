@@ -5,16 +5,19 @@ import { connect } from 'react-redux'
 import Fiend from './Fiend'
 import Card from './Card'
 
+import { endTurnAction } from '../../store/Fight/actions'
+
 import './styles.css'
 
 class Fight extends React.Component {
   static propTypes = {
     fight: PropTypes.object,
-    character: PropTypes.object
+    character: PropTypes.object,
+    endTurn: PropTypes.func.isRequired
   }
 
   render () {
-    const { fight } = this.props
+    const { fight, endTurn } = this.props
 
     if (!fight) return null
 
@@ -25,7 +28,7 @@ class Fight extends React.Component {
         </div>
         <div className="info">
           <div className="ap">{`AP: ${fight.ap}`}</div>
-          <div className="end-turn">End turn</div>
+          <div className="end-turn" onClick={() => endTurn()}>End turn</div>
         </div>
         <div className="cards">
           {fight.cards.map((card, i) => <Card key={i} card={card} id={i} />)}
@@ -41,7 +44,7 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = {
-  //
+  endTurn: endTurnAction
 }
 
 export default connect(
